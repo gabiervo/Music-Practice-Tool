@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electron app</title>
+
+    <link href="index.css" rel="stylesheet">
+    <script>
+        let imgDictionary = {
+            1:'../ClaveSol/Do.png',
+            2:'../ClaveSol/Re.png',
+            3:'../ClaveSol/Mi.png',
+            4:'../ClaveSol/Fa.png',
+            5:'../ClaveSol/Sol.png',
+            6:'../ClaveSol/La.png',
+            7:'../ClaveSol/Si.png'};
+        let num = 1;
+        let prevNum;
+        </script>
+        <script src="index.js"></script>
+
+</head>
+<body>
+    <div id ="titleCard">Music Practice Game</div>
+    <img src="../ClaveSol/Do.png" id="musicImage">
+
+    <div class="buttonContainer">
+        <div id="nextButton" class="musicButton" type="button" onclick="img()">Next</div>
+        <div class="container">
+            <div id="do" class="musicButton" type="button" onclick="check(1, 'do')">Do</div>
+            <div id="re" class="musicButton" type="button" onclick="check(2, 're')">Re</div>
+            <div id="mi" class="musicButton" type="button" onclick="check(3, 'mi')">Mi</div>
+            <div id="fa" class="musicButton" type="button" onclick="check(4, 'fa')">Fa</div>
+            <div id="sol" class="musicButton" type="button" onclick="check(5, 'sol')">Sol</div>
+            <div id="la" class="musicButton" type="button" onclick="check(6, 'la')">La</div>
+            <div id="si" class="musicButton" type="button" onclick="check(7, 'si')">Si</div>
+        </div>
+    </div>
+    <script>img();</script>
+</body>
+</html>

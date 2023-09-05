@@ -1,0 +1,16 @@
+{
+  "name": "electronapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Gabiervo",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^26.1.0",
+    "electron-reload": "^2.0.0-alpha.1",
+    "nvm": "0.0.4"
+  }
+}
