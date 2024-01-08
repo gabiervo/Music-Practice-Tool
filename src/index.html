@@ -8,35 +8,161 @@
     <link href="index.css" rel="stylesheet">
     <script>
         let imgDictionary = {
-            1:'../ClaveSol/Do.png',
-            2:'../ClaveSol/Re.png',
-            3:'../ClaveSol/Mi.png',
-            4:'../ClaveSol/Fa.png',
-            5:'../ClaveSol/Sol.png',
-            6:'../ClaveSol/La.png',
-            7:'../ClaveSol/Si.png'};
-        let num = 1;
-        let prevNum;
+            1:'../ClaveSol/Do.svg',
+            2:'../ClaveSol/Re.svg',
+            3:'../ClaveSol/Mi.svg',
+            4:'../ClaveSol/Fa.svg',
+            5:'../ClaveSol/Sol.svg',
+            6:'../ClaveSol/La.svg',
+            7:'../ClaveSol/Si.svg',
+            8:'../ClaveSol/reFlat.svg',
+            9:'../ClaveSol/miFlat.svg',
+            10:'../ClaveSol/solFlat.svg',
+            11:'../ClaveSol/laFlat.svg',
+            12:'../ClaveSol/siFlat.svg',
+            13:'../ClaveSol/doSharp.svg',
+            14:'../ClaveSol/reSharp.svg',
+            15:'../ClaveSol/faSharp.svg',
+            16:'../ClaveSol/solSharp.svg',
+            17:'../ClaveSol/laSharp.svg',
+        };
+        let imgIndexNum = 1;
+        let prevImgIndexNum;
+        let result = 'none';
+        let maxStreak = 0;
+        let lives = 3;
+        let settBoxStateCounter = 0;
+
+        let settings = {
+            "colorTheme": "default",
+            "maxStreak": 0,
+        };
         </script>
         <script src="index.js"></script>
+        <script src="https://kit.fontawesome.com/39b0d011fa.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
-    <div id ="titleCard">Music Practice Game</div>
-    <img src="../ClaveSol/Do.png" id="musicImage">
-
-    <div class="buttonContainer">
-        <div id="nextButton" class="musicButton" type="button" onclick="img()">Next</div>
-        <div class="container">
-            <div id="do" class="musicButton" type="button" onclick="check(1, 'do')">Do</div>
-            <div id="re" class="musicButton" type="button" onclick="check(2, 're')">Re</div>
-            <div id="mi" class="musicButton" type="button" onclick="check(3, 'mi')">Mi</div>
-            <div id="fa" class="musicButton" type="button" onclick="check(4, 'fa')">Fa</div>
-            <div id="sol" class="musicButton" type="button" onclick="check(5, 'sol')">Sol</div>
-            <div id="la" class="musicButton" type="button" onclick="check(6, 'la')">La</div>
-            <div id="si" class="musicButton" type="button" onclick="check(7, 'si')">Si</div>
+<div class="settingsMenu" id="unblur">
+    <div class="ColorSettings">
+        <div class="color">Color Pallette</div>
+        <div class="colorSettingsDropdown">
+            <div class="inactive">
+                <button id="dropdownBtn" onclick="changeColorSettings('default')">Default</button>
+                <button id="dropdownBtn" onclick="changeColorSettings('catpuccin')">Catpuccin</button>
+            </div>
         </div>
     </div>
-    <script>img();</script>
+</div>
+
+<div class="specialButtonContainer">
+    <div class="specialButton" type="button" id="home">
+        <img src="../Icons/house-solid.svg">
+    </div>
+    <div class="specialButton" type="button" id="settings" onclick="setSettings()">
+        <img src="../Icons/gear-solid.svg">
+    </div>
+</div>
+<div id = "titleCard">Music Practice Game</div>
+        <div class="buttonContainer">
+                <div id="scoreContainer">
+                    <div class="imgContainer">
+                        <img src="../ClaveSol/Do.svg" id="musicImage">
+                    </div>
+                    <div id = "scoreCount" type="text">0</div>
+                    <div id = "streakCount" type="text">Best<br>Streak: <span id="streakNum"></span></div>
+                    <script>
+                        document.getElementById('streakNum').innerHTML = 0;
+                    </script>
+                    <div id="skipButton" class="musicButton" type="button" onclick="loseLife()">Skip</div>
+                    <div class="lifeContainer">
+                        <div class="life" id = "life1"></div>
+                        <div class="life" id = "life2"></div>
+                        <div class="life" id = "life3"></div>
+                    </div>
+                </div>
+
+            <div class="noteContainer">
+                    <div class="container main" id="base">
+                        <div id="do" class="musicButton" type="button" onclick="check(1, 'do')">Do</div>
+                        <div id="re" class="musicButton" type="button" onclick="check(2, 're')">Re</div>
+                        <div id="mi" class="musicButton" type="button" onclick="check(3, 'mi')">Mi</div>
+                        <div id="fa" class="musicButton" type="button" onclick="check(4, 'fa')">Fa</div>
+                        <div id="sol" class="musicButton" type="button" onclick="check(5, 'sol')">Sol</div>
+                        <div id="la" class="musicButton" type="button" onclick="check(6, 'la')">La</div>
+                        <div id="si" class="musicButton" type="button" onclick="check(7, 'si')">Si</div>
+                    </div>  
+                    <div class="container" id="flat">
+                        <div id="reflat" class="musicButton" type="button" onclick="check(8, 'reflat')">Re♭</div>
+                        <div id="miflat" class="musicButton" type="button" onclick="check(9, 'miflat')">Mi♭</div>
+                        <div id="solflat" class="musicButton" type="button" onclick="check(10, 'solflat')">Sol♭</div>
+                        <div id="laflat" class="musicButton" type="button" onclick="check(11, 'laflat')">La♭</div>
+                        <div id="siflat" class="musicButton" type="button" onclick="check(12, 'siflat')">Si♭</div>
+                    </div>  
+                    <div class="container" id="sharp">
+                        <div id="dosharp" class="musicButton" type="button" onclick="check(13, 'dosharp')">Do♯</div>
+                        <div id="resharp" class="musicButton" type="button" onclick="check(14, 'resharp')">Re♯</div>
+                        <div id="fasharp" class="musicButton" type="button" onclick="check(15, 'fasharp')">Fa♯</div>
+                        <div id="solsharp" class="musicButton" type="button" onclick="check(16, 'solsharp')">Sol♯</div>
+                        <div id="lasharp" class="musicButton" type="button" onclick="check(17, 'lasharp')">La♯</div>
+                    </div>  
+            </div>
+            <div class="typeButtonsContainer">
+                <button class="typeButtons typeButtonDeco"  id="baseType" onclick="changeType('baseType', 'base')">♩</button>
+                <button class="typeButtons" id="flatType" onclick="changeType('flatType','flat')">♩♭</button>
+                <button class="typeButtons" id="sharpType" onclick="changeType('sharpType', 'sharp')">♩♯</button>
+            </div>
+        </div>
+    <script>
+        initSettings();
+        img();
+        let prevBox = document.getElementById("base");
+        let prevBtn = document.getElementById("baseType");
+        document.addEventListener("keyup", function(){
+            key = window.event.key;
+            console.log(key);
+            if(key == '1'){
+                changeType('baseType', 'base');
+            }
+            if(key == '2'){
+                changeType('flatType', 'flat');
+            }
+            if(key == '3'){
+                changeType('sharpType', 'sharp');
+            }
+            if(key == 'Enter'){
+                loseLife();
+            }
+            if(key == 'Escape'){
+                if(settBoxStateCounter > 0){
+                    removeSettings();
+                    settBoxStateCounter = 0;
+                }
+                else{
+                    setSettings();
+                    settBoxStateCounter += 1;
+                }
+            }
+        });
+        document.addEventListener('click', function(e){
+            if(!document.getElementById('unblur').contains(e.target)){
+                console.log('out');
+                if(document.getElementById('unblur').style.display == "flex"){
+                    if(settBoxStateCounter > 0){
+                        removeSettings();
+                        console.log('removed');
+                        settBoxStateCounter = 0;
+                    }
+                    else{
+                        console.log('added');
+                        settBoxStateCounter += 1;
+                    }
+                }
+            }
+            else{
+                console.log('in');
+            }
+        });
+    </script>
 </body>
 </html>
